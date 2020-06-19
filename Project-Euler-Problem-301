@@ -1,0 +1,16 @@
+private static int [][] memo;
+    public static void main (String [] args) {
+        long start = System.nanoTime ();
+        memo = new int [2][31];
+        System.out.println (count (0, 30));
+        System.out.println ("Time: " + (System.nanoTime () - start) / 1000000000. + "s");
+    }
+    
+    private static int count (int last, int left) {
+        if (memo [last][left] != 0) return memo [last][left];
+        if (left == 0) return memo [last][left] = 1;
+        if (last == 1) return memo [last][left] = count (0, left - 1);
+        if (memo [0][left - 1] == 0) memo [0][left - 1] = count (0, left - 1);
+        if (memo [1][left - 1] == 0) memo [1][left - 1] = count (1, left - 1);
+        return memo [last][left] = (memo [0][left - 1] + memo [1][left - 1]);
+    }
